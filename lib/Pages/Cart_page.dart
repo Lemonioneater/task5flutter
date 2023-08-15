@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../Data/Products source.dart';
 import '../Data/displayer/Cart_displayer.dart';
 import '../Data/displayer/Product_display.dart';
+import '../main.dart';
 import 'Counter_page.dart';
 
 class Cartpage extends StatefulWidget {
@@ -31,7 +32,7 @@ class _CartpageState extends State<Cartpage> {
                 bottom: 0,
               ),
               child:  Text(
-                'Cart total :',
+                'Cart total : ${y.toString()}',
                 style: TextStyle(
                     fontFamily: GoogleFonts.openSans().fontFamily,
                     fontSize: 20,

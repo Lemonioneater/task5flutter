@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:task3ahmed_faisal/Data/Products source.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:task3ahmed_faisal/main.dart';
 import '../Product file.dart';
 
 class display extends StatefulWidget {
@@ -121,6 +121,7 @@ class _displayState extends State<display> {
                     onPressed: () {
                       if (widget.product.count <=30) {
                         widget.product.count = widget.product.count + 1;
+                        y = y + widget.product.price;
                       }
                       else {
                         AlertDialog(
@@ -167,6 +168,7 @@ class _displayState extends State<display> {
                       setState(() {
                         if (widget.product.count > 0) {
                           widget.product.count = widget.product.count - 1;
+                          y = y - widget.product.price;
                         }
                       });
                     },
