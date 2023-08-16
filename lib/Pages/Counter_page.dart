@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'Listing.dart';
+import 'Login.dart';
+
 
 class counter extends StatefulWidget {
   const counter({
@@ -57,24 +60,44 @@ class _counterState extends State<counter> {
         backgroundColor: const Color(0xffF6F7F8),
         foregroundColor: const Color(0xff252837),
         actions: [
-          Container(
-            margin: const EdgeInsets.only(
-              left: 20,
-              right: 5,
-              top: 15,
-              bottom: 5,
-            ),
-            child:  Text(
-              'Counter ',
+          IconButton(
+            onPressed: () async {
+              await logout().then((value){
+                if(value)
+                {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context){
+                        return const loginpage();
+                      }
+                      )
+                  );
+                }
+              });
+            }, icon: Icon(Icons.logout),
+          ),
+          Expanded(child: SizedBox()),
+          Center(
+            child: Text(
+              'Counter',
               style: TextStyle(
                   fontFamily: GoogleFonts.openSans().fontFamily,
                   fontSize: 20,
                   color: const Color(0xff252837),
                   fontWeight: FontWeight.w700),
-              textAlign: TextAlign.right,
             ),
           ),
           Expanded(child: SizedBox()),
+          Visibility(
+            visible: false,
+            maintainSize: true,
+            maintainAnimation: true,
+            maintainState: true,
+            child: IconButton(
+              onPressed: (){},
+              icon: Icon(Icons.logout),
+            ),
+          ),
         ],
       ),
       body: Padding(
@@ -83,7 +106,7 @@ class _counterState extends State<counter> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              '$opreation= $op',
+              '$opreation = $op',
               style: TextStyle(
                 fontSize: 15,
                 fontFamily: GoogleFonts.openSans().fontFamily,

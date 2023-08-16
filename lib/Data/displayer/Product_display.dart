@@ -1,12 +1,11 @@
-import 'dart:math';
-import 'package:task3ahmed_faisal/Data/Products source.dart';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task3ahmed_faisal/main.dart';
-import '../Product file.dart';
+import '../Productmodel.dart';
 
 class display extends StatefulWidget {
-  final Product product;
+  final ProductItem product;
 
   const display({super.key, required this.product});
 
@@ -20,31 +19,32 @@ class _displayState extends State<display> {
     return Container(
         height: 250,
         width: 250,
-        margin: const EdgeInsets.all(15),
+        margin: const EdgeInsets.all(10),
         child: Column(
           children: [
             Stack(
               children: [
                 Container(
                   height: 100,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                    border: const Border(
-                      left: BorderSide(color: Colors.white, width: 35),
-                      right: BorderSide(color: Colors.white, width: 35),
-                      top: BorderSide(color: Colors.white, width: 20),
-                      bottom: BorderSide(color: Colors.white, width: 20),
-                    ),
-                    image: DecorationImage(
-                      image: NetworkImage(
-                        widget.product.thumbnail,
+                  width:  200,
+                  decoration: const BoxDecoration(
+                    color: Colors.black87,
+                  ),
+                  child: Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(5),
+                        image: DecorationImage(
+                          image: NetworkImage(
+                            widget.product.thumbnail,
+                          ),
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                      fit: BoxFit.cover,
                     ),
                   ),
-                  margin: const EdgeInsets.all(5),
                 ),
                 const Positioned(
                   top: 10,
@@ -55,6 +55,9 @@ class _displayState extends State<display> {
                   ),
                 ),
               ],
+            ),
+            const SizedBox(
+              height: 10,
             ),
             Text(
               '${widget.product.title}:',
@@ -68,8 +71,8 @@ class _displayState extends State<display> {
               ),
               textAlign: TextAlign.center,
             ),
-            ElevatedButton(
-              onPressed: () {
+            InkWell(
+              onTap: () {
                 showModalBottomSheet(
                     context: context,
                     shape: const RoundedRectangleBorder(
@@ -94,9 +97,18 @@ class _displayState extends State<display> {
                       );
                     });
               },
-              child: const Icon(Icons.info),
+              child: Expanded(
+                child: Text(widget.product.description,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+
+                ),
+              ),
             ),
-            const Expanded(child: SizedBox()),
+            const SizedBox(
+              height: 20,
+            ),
             Text(
               '\$${widget.product.price.toString()}',
               style: TextStyle(

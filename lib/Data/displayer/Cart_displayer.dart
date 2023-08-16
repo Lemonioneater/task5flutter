@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:task3ahmed_faisal/Data/Product%20file.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:task3ahmed_faisal/main.dart';
+
+import '../Productmodel.dart';
 
 
 class Cartdisp extends StatefulWidget {
-  final Product product2;
+  final ProductItem product2;
 
-  const Cartdisp({super.key, required this.product2});
+  const Cartdisp({super.key, required this.product2 });
 
   @override
   State<Cartdisp> createState() => _CartdispState();
@@ -14,46 +17,81 @@ class Cartdisp extends StatefulWidget {
 class _CartdispState extends State<Cartdisp> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          margin: EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: Colors.grey[400]
-          ),
-          child: Row(
+    return Container(
+      margin: const EdgeInsets.only(
+        right: 0,
+        top: 10,
+        bottom: 10,
+        left: 5,
+      ),
+      decoration: BoxDecoration(
+          color: Colors.grey[400], borderRadius: BorderRadius.circular(20)),
+      child: Column(
+        children: [
+          Row(
             children: [
-              Container(
-         height: 125, width: 125,
-         margin: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-    image: DecorationImage(
-    image: NetworkImage( widget.product2.thumbnail
-    ),
-    ),
-    ),
-    ),
-              Column(
-                children: [
-                  Text('Item : ${widget.product2.title}',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                    ),),
-                  Text('Total quantity of this item : ${widget.product2.count}',
-                   style: TextStyle(
-                     fontWeight: FontWeight.w400
-                   ),),
-                  Text('Total price of them : ${(widget.product2.count*widget.product2.price).toString()}',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400
+              CircleAvatar(
+                radius: 25,
+                backgroundImage: NetworkImage(widget.product2.thumbnail),
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Expanded(
+                child: Text(
+                  'x ${widget.product2.count.toString()}\n${widget.product2.title}',
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: GoogleFonts.openSans().fontFamily,
+                      fontWeight: FontWeight.w800),
+                ),
+              ),
+              SizedBox(
+                child: Row(
+                  children: [
+                    FloatingActionButton(
+                      mini: true,
+                      child: const Icon(Icons.add),
+                      onPressed: () {
+                        if (widget.product2.count <= 31) {
+                          widget.product2.count = widget.product2.count + 1;
+                          y = y + widget.product2.price;
+                        }
+
+                        setState(() {});
+                      },
                     ),
-                  ),
-                ],
-              )
-    ],
-    ),
-    ),
-    ],
+                    FloatingActionButton(
+                      mini: true,
+                      child: const Icon(Icons.remove),
+                      onPressed: () {
+                        if (widget.product2.count > 0) {
+                          widget.product2.count = widget.product2.count - 1;
+                          y = y - widget.product2.price;
+                        }
+                        setState(() {});
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              const Expanded(
+                child: SizedBox(),
+              ),
+              Text(
+                '\$${(widget.product2.count * widget.product2.price).toString()}',
+                style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: GoogleFonts.openSans().fontFamily,
+                    fontWeight: FontWeight.w800),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

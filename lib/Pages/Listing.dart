@@ -1,10 +1,22 @@
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../Data/Products source.dart';
+import '../Data/Datafetch.dart';
 import '../Data/displayer/Product_display.dart';
-import 'Counter_page.dart';
+import 'Login.dart';
+
+Future<bool> logout() async{
+  try {
+    await FirebaseAuth.instance.signOut();
+    return true;
+  } catch (error) {
+    print(error.toString());
+    return false;
+  }
+}
+
 
 class ListScreen extends StatefulWidget {
   const ListScreen({super.key});
@@ -13,7 +25,10 @@ class ListScreen extends StatefulWidget {
   State<ListScreen> createState() => _ListScreenState();
 }
 
+
 class _ListScreenState extends State<ListScreen> {
+
+
   @override
   void initState() {
     if (DataSource.isLoading) {
@@ -28,6 +43,7 @@ class _ListScreenState extends State<ListScreen> {
     super.initState();
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +51,23 @@ class _ListScreenState extends State<ListScreen> {
           backgroundColor: const Color(0xffF6F7F8),
           foregroundColor: const Color(0xff252837),
           actions: [
+            SizedBox(width: 10,),
+            IconButton(
+              onPressed: () async {
+                await logout().then((value){
+                  if(value)
+                  {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context){
+                          return const loginpage();
+                        }
+                        )
+                    );
+                  }
+                });
+              }, icon: Icon(Icons.logout),
+            ),
             Container(
               margin: const EdgeInsets.only(
                 left: 20,
@@ -72,7 +105,7 @@ class _ListScreenState extends State<ListScreen> {
             : SafeArea(
           child: Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: 15,
+                horizontal: 8,
               ),
               child: GridView.builder(
                 itemCount: DataSource.products.length,
